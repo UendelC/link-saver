@@ -17,10 +17,15 @@ function writeFile(callback) {
 }
 
 http.createServer((req, res) => {
+    console.log('*** URL ***');
+    console.log(req.url);
     const { name, url, del } = URL.parse(req.url, true).query;
+    console.log("Requisição:  ");
+    console.log(name);
+    console.log('*******');
 
     res.writeHead(200, {
-        'Acess-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*'
     });
 
     if (!name || !url) {
@@ -29,7 +34,6 @@ http.createServer((req, res) => {
 
     if (del) {
         data.urls = data.urls.filter(item => String(item.url) !== String(url));
-        console.log(data.urls);
         return writeFile(message => res.end(message));
     }
 
